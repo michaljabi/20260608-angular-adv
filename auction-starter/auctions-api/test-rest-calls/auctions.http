@@ -1,0 +1,14 @@
+### Get all auctions
+GET http://localhost:3000/api/auctions
+
+### Get ONE auction
+GET http://localhost:3000/api/auctions/p1uCsfRI
+
+### Add new auction
+POST http://localhost:3000/api/auctions
+Content-Type: application/json
+
+{
+    "title": "sample!",
+    "imgUrl": "https://img.com/s.png"
+}

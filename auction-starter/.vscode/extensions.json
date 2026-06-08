@@ -1,0 +1,30 @@
+{
+  "recommendations": [
+    "angular.ng-template",
+    "cyrilletuzi.angular-schematics",
+    // dodatkowo:
+    "infinity1207.angular2-switcher",
+    "formulahendry.auto-rename-tag",
+    // do syntax check - jeszcze:
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "Zignd.html-css-class-completion",
+    // testowanie:
+    "vitest.explorer",
+    // inne do testow:
+    "wallabyjs.wallaby-vscode",
+    // wygląd UI:
+    "johnpapa.vscode-peacock",
+    "pkief.material-icon-theme",
+    // pomoc do naszego projektu:
+    "humao.rest-client",
+    "hossaini.bootstrap-intellisense",
+    "eamodio.gitlens",
+    "github.vscode-github-actions",
+    "nrwl.angular-console",
+    "qwtel.sqlite-viewer",
+    // Uruchamianie JS/TS:
+    "formulahendry.code-runner",
+    "achil.vscode-javascript-repl"
+   ]
+}
