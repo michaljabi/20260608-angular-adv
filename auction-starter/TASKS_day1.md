@@ -17,3 +17,13 @@ npm start
 npm run db-seed
 npm run start:dev
 ```
+
+
+## Zadanie 2:
+
+Pytanie o rodzaj aplikacji: _SPA / SSR / SSG_
+
+
+- **SPA** - _Sigle Page Application_ (tylko w przeglądarce - pure JS/HTML/CSS)
+- **SSR** - _Server Side Rendering_
+- **SSG** - _Server Side Generation_
