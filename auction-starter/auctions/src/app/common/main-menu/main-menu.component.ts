@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
 import { CartService } from '../../cart/cart.service';
+import { CartStore } from '../../cart/cart.store';
 
 interface MenuItem {
   link: string;
@@ -34,7 +35,7 @@ interface MenuItem {
           <fa-icon icon="plus"></fa-icon> Dodaj
         </a>
         <a class="btn btn-secondary" routerLink="/cart">
-          <fa-icon icon="shopping-basket"></fa-icon> Koszyk ({{ cartService.getItemsCount() }})
+          <fa-icon icon="shopping-basket"></fa-icon> Koszyk ({{ cartStore.itemsCount() }})
         </a>
       </div>
     </nav>
@@ -47,7 +48,8 @@ interface MenuItem {
 })
 export class MainMenuComponent {
 
- cartService = inject(CartService);
+ protected readonly cartStore = inject(CartStore);
+ 
 
   menuItems: MenuItem[] = [
     { link: '/auctions', name: 'Aukcje' },

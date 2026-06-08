@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {CartService} from '../cart.service';
-import {CartRowComponent} from './cart-row.component';
+import { CartRowComponent } from './cart-row.component';
+import { CartStore } from '../cart.store';
 
 @Component({
   imports: [CartRowComponent],
@@ -9,7 +9,7 @@ import {CartRowComponent} from './cart-row.component';
     <section>
       <h2 class="my-3">Twój koszyk</h2>
 
-      @if (cartService.getItems().length) {
+      @if (cartStore.itemsCount()) {
         <table class="table align-middle">
           <thead>
             <tr>
@@ -22,19 +22,19 @@ import {CartRowComponent} from './cart-row.component';
             </tr>
           </thead>
           <tbody>
-            @for (item of cartService.getItems(); track item.uid) {
-              <tr app-cart-row [item]="item" (remove)="cartService.remove($event)"></tr>
+            @for (item of cartStore.cartItems(); track item.uid) {
+              <tr app-cart-row [item]="item" (remove)="cartStore.remove($event)"></tr>
             }
           </tbody>
           <tfoot>
             <tr>
-              <th colspan="4" class="text-end">Razem ({{ cartService.getItemsCount() }}):</th>
+              <th colspan="4" class="text-end">Razem ({{ cartStore.itemsCount() }}):</th>
               <th class="text-end">{{ 0 }} zł</th>
               <th class="text-end">
                 <button
                   type="button"
                   class="btn btn-sm btn-outline-secondary"
-                  (click)="cartService.clear()"
+                  (click)="cartStore.clear()"
                 >
                   Wyczyść
                 </button>
@@ -50,5 +50,5 @@ import {CartRowComponent} from './cart-row.component';
   styles: ``,
 })
 export class CartPageComponent {
-  protected readonly cartService = inject(CartService);
+  protected readonly cartStore = inject(CartStore);
 }

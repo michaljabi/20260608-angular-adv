@@ -2,8 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuctionsService } from '../auctions.service';
 import { AuctionItem } from '../auction-item';
 import { AuctionCardComponent } from '../auction-card/auction-card.component';
-import { CartService } from '../../cart/cart.service';
 import { SharedModule } from '../../shared/shared.module';
+import { CartStore } from '../../cart/cart.store';
 
 @Component({
   imports: [AuctionCardComponent, SharedModule],
@@ -49,7 +49,7 @@ export class AuctionsPageComponent implements OnInit {
   protected searchText = signal('');
 
   private auctionService = inject(AuctionsService);
-  private cartService = inject(CartService);
+  private readonly cartStore = inject(CartStore);
 
   ngOnInit(): void {
     this.loadAuctions();
@@ -80,6 +80,6 @@ export class AuctionsPageComponent implements OnInit {
   }
 
   handleAddToCart(auction: AuctionItem) {
-    this.cartService.addAuction(auction);
+    this.cartStore.addAuction(auction);
   }
 }
