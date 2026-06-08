@@ -1,4 +1,4 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { PageComponent } from '../../common/page/page.component';
 
 @Component({
@@ -25,7 +25,18 @@ export class SignalUsedInPage implements OnInit {
 
   // 📃 Doc: https://angular.dev/guide/signals#writable-signals
   count = signal(200);
-  message = signal('')
+
+  // refactoring:
+  // message = computed(() => this.count() > 200 ? 'To za wysoko!' : '')
+  message = computed(() => {
+    // --- Reactive context --->
+    const value = this.count();
+    if(value > 200) {
+      return 'To za wysoko!';
+    }
+    return '';
+    // <---- Reactive context
+  })
 
   constructor() {
     // setTimeout(() => {
@@ -44,7 +55,9 @@ export class SignalUsedInPage implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.message.set(' ja też się zmieniam')
+
+      // żeby to zadziałało - potrzebujemy "linkedSignal".
+      // this.message.set(' ja też się zmieniam')
     }, 4000)
   }
 
