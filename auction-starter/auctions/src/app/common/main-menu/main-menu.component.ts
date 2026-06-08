@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
+import { CartService } from '../../cart/cart.service';
 
 interface MenuItem {
   link: string;
@@ -33,7 +34,7 @@ interface MenuItem {
           <fa-icon icon="plus"></fa-icon> Dodaj
         </a>
         <a class="btn btn-secondary" routerLink="/cart">
-          <fa-icon icon="shopping-basket"></fa-icon> Koszyk
+          <fa-icon icon="shopping-basket"></fa-icon> Koszyk ({{ cartService.getItemsCount() }})
         </a>
       </div>
     </nav>
@@ -45,6 +46,8 @@ interface MenuItem {
   `
 })
 export class MainMenuComponent {
+
+ cartService = inject(CartService);
 
   menuItems: MenuItem[] = [
     { link: '/auctions', name: 'Aukcje' },
