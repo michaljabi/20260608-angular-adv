@@ -34,7 +34,11 @@ export class SignalComputedPage {
   // Tutaj computed jest tylko "readonly" ale z dodatkową logiką do przeliczenia.
   // 📃 Doc: https://angular.dev/guide/signals#computed-signals
   // ten sygnał przeliczy się "automagicznie" przy każdej zmianie count() i będzie miał zawsze aktualną wartość
-  computedCount = computed(() => this.count() * 2);
+  computedCount = computed(() => {
+    
+    
+    return this.count() * 2
+  });
   exponentialCount = computed(() => this.count() * this.count());
 
   handleUpdateCount(value: number) {
