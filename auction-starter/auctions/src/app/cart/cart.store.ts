@@ -50,9 +50,7 @@ export class CartStore {
 
   // zostanie:
   remove(uid: AuctionItem['uid']) {
-    this.#cartItems.update((items) => {
-      // TODO
-      return items;
-    });
+    this.#cartItems.update((items) => items.filter(i => i.uid !== uid));
   }
 }
+
