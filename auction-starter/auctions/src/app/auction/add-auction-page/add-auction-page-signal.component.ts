@@ -178,24 +178,26 @@ export class AddAuctionPageSignalComponent {
     }
     console.log('WYSYŁAM!', this.auctionModel());
 
-    /*
-    const { title, description, price } = form.value;
+    const { title, description, price } = this.auctionModel();
     const auction: Omit<AuctionItem, 'uid'> = {
       title,
       price,
       description,
-      imgUrl: this.imgPreviewUrl,
+      imgUrl: this.imgPreviewUrl(),
     };
-    this.auctionsService.addNew(auction);
+    
     this.auctionsService.addNew(auction).subscribe({
       next: (a: AuctionItem) => {
-        form.resetForm();
-        this.imgId = 1;
+        this.auctionModel.set({
+          title: '',
+          price: 0,
+          imgId: 1,
+          description: '',
+        });
       },
       error: (err) => {
         console.error(err);
       },
     });
-    */
   }
 }

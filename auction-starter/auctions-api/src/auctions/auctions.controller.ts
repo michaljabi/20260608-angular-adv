@@ -24,6 +24,7 @@ export class AuctionsController {
 
   @Post()
   create(@Body() body: Omit<AuctionItem, 'uid'>): Promise<AuctionItem> {
+    
     return this.auctions.create(body);
   }
 }
