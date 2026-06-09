@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const genericReq = 'To pole jest wymagane';
+ const genericReq = 'To pole jest wymagane';
 
 export const AuctionModelSchema = z.object({
   title: z.string().min(1, genericReq),

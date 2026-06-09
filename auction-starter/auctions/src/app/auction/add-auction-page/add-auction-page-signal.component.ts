@@ -13,16 +13,18 @@ import {
   validateStandardSchema,
 } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
-import { AuctionModelSchema } from './auction-model.schema';
+import { AuctionModelSchema, AuctionFormModel } from './auction-model.schema';
 
 // Albo tak tzw. Index Type z TS
 // https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html#handbook-content
-interface AuctionFormModel {
-  title: AuctionItem['title'];
-  price: AuctionItem['price'];
-  imgId: number;
-  description: string;
-}
+/*
+  interface AuctionFormModel {
+    title: AuctionItem['title'];
+    price: AuctionItem['price'];
+    imgId: number;
+    description: string;
+  }
+*/
 
 // Albo tak tzw Util Type (Pick<>) użyty
 // https://www.typescriptlang.org/docs/handbook/utility-types.html#handbook-content
