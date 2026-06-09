@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { form, FormField } from '@angular/forms/signals';
 import { PageComponent } from '../../common/page/page.component';
@@ -38,12 +38,12 @@ interface ConfirmationModel {
       </div>
     </form>
 
-    @if (submitted(); as value) {
-      <div class="notification is-success">
-        <p class="has-text-weight-semibold">Dane formularza:</p>
-        <pre>{{ value | json }}</pre>
-      </div>
-    }
+    <!-- @if (submitted(); as value) { -->
+    <div class="notification is-success">
+      <p class="has-text-weight-semibold">Dane formularza:</p>
+      <pre>{{ this.confirmationForm().value() | json }}</pre>
+    </div>
+    <!-- } -->
   </app-page>`,
   styles: ``,
 })
@@ -58,6 +58,16 @@ export class ConfirmationFormPage {
     confirm: false,
   });
 
+  constructor() {
+    setTimeout(() => {
+      this.dataModel.update((d) => ({ ...d, name: 'Michał' }));
+      // this.dataModel.update((d) => {
+      //   d.name = 'Kasia';
+      //   return {...d};
+      // });
+    }, 4000);
+  }
+
   // 📃 Doc: https://angular.dev/guide/forms/signals/models#using-typescript-types
   protected readonly confirmationForm = form(this.dataModel);
 
@@ -66,5 +76,6 @@ export class ConfirmationFormPage {
 
   protected onSubmit(): void {
     this.submitted.set(this.confirmationForm().value());
+    // effect(() => {}) // musi być w cosnstructor albo ngOnInit
   }
 }

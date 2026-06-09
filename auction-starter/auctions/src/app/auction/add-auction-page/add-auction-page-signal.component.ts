@@ -1,20 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { FormsModule, NgForm } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+// import { FormsModule } from '@angular/forms';
 import { AuctionsService } from '../auctions.service';
 import { AuctionItem } from '../auction-item';
+import { form, FormField, max, min, required, FormRoot } from '@angular/forms/signals';
+import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [SharedModule, FormsModule, JsonPipe],
+  selector: 'app-add-auction-page-signal',
+  imports: [SharedModule /*FormsModule,*/, FormRoot, FormField, JsonPipe],
   template: `
     <h2 class="my-3">Dodaj nową aukcję</h2>
     <section class="row">
       <div class="col-6">
-        <img class="img-thumbnail" alt="Podgląd fotografii" [src]="imgPreviewUrl" />
+        <img class="img-thumbnail" alt="Podgląd fotografii" [src]="imgPreviewUrl()" />
       </div>
       <div class="col-6">
-        <form #auctionForm="ngForm" (ngSubmit)="handleSubmit(auctionForm)">
+        <form [formRoot]="auctionForm" (submit)="handleSubmit()">
           <div class="form-group">
             <label for="auctionTitle">Nazwa aukcji</label>
             <div class="input-group mb-3">
@@ -26,16 +28,15 @@ import { AuctionItem } from '../auction-item';
               <input
                 id="auctionTitle"
                 type="text"
-                name="title"
-                required
+                [formField]="auctionForm.title"
+                [class.invalid]="auctionForm.title().invalid() && auctionForm.title().touched()"
                 class="form-control"
-                ngModel
-                #title="ngModel"
-                #titleFocus
               />
             </div>
-            @if (title.errors && title.touched) {
-              <div class="alert alert-danger">To pole jest wymagane</div>
+            @if (auctionForm.title().invalid() && auctionForm.title().touched()) {
+              @for (error of auctionForm.title().errors(); track error.kind) {
+                <div class="alert alert-danger">{{ error.message }}</div>
+              }
             }
           </div>
 
@@ -43,19 +44,23 @@ import { AuctionItem } from '../auction-item';
             <label for="auctionPrice">Cena aukcji</label>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" (click)="titleFocus.focus()">
+                <span class="input-group-text">
                   <fa-icon icon="tag"></fa-icon>
                 </span>
               </div>
               <input
                 id="auctionPrice"
                 type="number"
-                name="price"
-                required
                 class="form-control"
-                ngModel
+                [formField]="auctionForm.price"
+                [class.invalid]="auctionForm.price().invalid() && auctionForm.price().touched()"
               />
             </div>
+            @if (auctionForm.price().invalid() && auctionForm.price().touched()) {
+              @for (error of auctionForm.price().errors(); track error.kind) {
+                <div class="alert alert-danger">{{ error | json }}</div>
+              }
+            }
           </div>
 
           <div class="form-group">
@@ -66,21 +71,11 @@ import { AuctionItem } from '../auction-item';
                   <fa-icon icon="image"></fa-icon>
                 </span>
               </div>
-              <input
-                id="img"
-                type="number"
-                name="imgId"
-                required
-                class="form-control"
-                [(ngModel)]="imgId"
-                min="1"
-                max="1080"
-                #imgIdRef="ngModel"
-              />
+              <input id="img" type="number" class="form-control" [formField]="auctionForm.imgId" />
             </div>
-            @if (imgIdRef.errors && imgIdRef.touched) {
+            @if (auctionForm.imgId().invalid() && auctionForm.imgId().touched()) {
               <div class="alert alert-danger">
-                {{ imgIdRef.errors | json }}
+                {{ auctionForm.imgId().errors() | json }}
               </div>
             }
           </div>
@@ -92,8 +87,7 @@ import { AuctionItem } from '../auction-item';
                 id="auctionDescription"
                 rows="5"
                 class="form-control"
-                name="description"
-                ngModel
+                [formField]="auctionForm.description"
               ></textarea>
             </div>
           </div>
@@ -101,7 +95,7 @@ import { AuctionItem } from '../auction-item';
             <button
               class="btn btn-primary"
               type="submit"
-              [style]="{ opacity: auctionForm.invalid ? 0.6 : 1 }"
+              [style]="{ opacity: auctionForm().invalid() ? 0.6 : 1 }"
             >
               <fa-icon icon="gavel"></fa-icon> Dodaj aukcję
             </button>
@@ -112,35 +106,49 @@ import { AuctionItem } from '../auction-item';
   `,
   styles: [
     `
-      textarea.ng-invalid.ng-touched,
-      input.ng-invalid.ng-touched {
+      textarea.invalid,
+      input.invalid {
         border-color: darkred;
       }
     `,
   ],
 })
-export class AddAuctionPageComponent {
-  /**
-   * Zadanie #6: Przepraw formularz, aby używał SignalForms.
-   */
+export class AddAuctionPageSignalComponent {
+  auctionModel = signal<{ title: string; price: number; imgId: number; description: string }>({
+    title: '',
+    price: 0,
+    imgId: 1,
+    description: '',
+  });
 
-  imgId = 1;
+  auctionForm = form(this.auctionModel, (schema) => {
+    const genericReq = { message: 'To pole jest wymagane' };
+    required(schema.title, genericReq);
+    required(schema.price, { message: 'Musisz podać cenę aukcji' });
+    min(schema.price, 0, { message: 'Min. cena to "0" - za darmo' });
+    required(schema.imgId, genericReq);
+    min(schema.imgId, 1, { message: 'Min. 1!' });
+    max(schema.imgId, 1080, { message: 'Max 1080!' });
+  });
+
   auctionsService = inject(AuctionsService);
 
-  get imgPreviewUrl(): string {
-    if (this.imgId < 0) {
+  imgPreviewUrl = computed(() => {
+    const imgId = this.auctionModel().imgId;
+    if (imgId <= 0) {
       return `https://picsum.photos/id/1/600/600`;
     }
-    return `https://picsum.photos/id/${this.imgId}/600/600`;
-  }
+    return `https://picsum.photos/id/${imgId}/600/600`;
+  });
 
-  handleSubmit(form: NgForm) {
-    if (form.invalid) {
-      form.control.markAllAsTouched();
+  handleSubmit() {
+    if (this.auctionForm().invalid()) {
+      this.auctionForm().markAsTouched();
       return;
     }
-    console.log('WYSYŁAM!', form.value);
+    console.log('WYSYŁAM!', this.auctionModel());
 
+    /*
     const { title, description, price } = form.value;
     const auction: Omit<AuctionItem, 'uid'> = {
       title,
@@ -158,5 +166,6 @@ export class AddAuctionPageComponent {
         console.error(err);
       },
     });
+    */
   }
 }

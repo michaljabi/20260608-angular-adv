@@ -158,6 +158,7 @@ export class NewsletterSignPage {
   protected async onSubmit(): Promise<void> {
     await submit(this.newsletterForm, async (f) => {
       this.submitted.set(f().value());
+      // f().reset()
     });
   }
 }
