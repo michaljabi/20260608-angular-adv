@@ -20,7 +20,8 @@ interface Groceries {
         <label class="label">Produkt</label>
         <div class="control">
           <div class="select">
-            <select [ngModel]="selected()" (ngModelChange)="selected.set($event)">
+            <!-- <select [ngModel]="selected()" (ngModelChange)="selected.set($event)"> -->
+            <select [(ngModel)]="selected">
               @for (item of fruitsAndVeggies; track item.name) {
                 <option [ngValue]="item">{{ item.name }}</option>
               }
@@ -32,12 +33,13 @@ interface Groceries {
       <div class="field">
         <label class="label">Ilość</label>
         <div class="control">
-          <input
+          <!-- <input
             class="input"
             type="number"
             [ngModel]="quantity()"
             (ngModelChange)="setFormQuantity($event)"
-          />
+          /> -->
+          <input class="input" type="number" [(ngModel)]="quantity" />
         </div>
       </div>
     </div>
@@ -47,7 +49,8 @@ interface Groceries {
       <code>{{ quantity() }}</code>
     </p>
     <blockquote>
-      🪲 Zauważ, że ilość nie zmienia się powyżej jeśli coś wpiszemy samodzielnie w input. Musimy to naprawić 
+      🪲 Zauważ, że ilość nie zmienia się powyżej jeśli coś wpiszemy samodzielnie w input. Musimy to
+      naprawić
     </blockquote>
   </app-page>`,
   styles: ``,
@@ -67,16 +70,16 @@ export class ComputedButWriteablePage {
   // ❌ Problem:
   // W tym wariancie, owszem Ilość poprawie nam się zaktualizuje po wybraniu owocu/warzywa,
   // ale nie możemy jej już edytować, bo jest to sygnał tylko do odczytu (readonly).
-  protected readonly quantity = computed(() => this.selected().quantity);
+  //protected readonly quantity = computed(() => this.selected().quantity);
 
   // LinkedSignal
   // 📃 Doc: https://angular.dev/guide/signals/linked-signal
   // Wylicza ilość z wybranego produktu, ale pozostaje zapisywalny.
-  // protected readonly quantity = linkedSignal(() => this.selected().quantity);
+  protected readonly quantity = linkedSignal(() => this.selected().quantity);
 
   setFormQuantity(value: number) {
     // Możemy zrobić .set w linkedSignal
-    // this.quantity.set(value);
+    this.quantity.set(value);
   }
 
   // ⚔️ Sidequest: sprawdź, czy rozumiesz koncepcję
