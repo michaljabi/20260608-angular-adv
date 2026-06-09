@@ -10,6 +10,7 @@ import {
   // min,
   // required,
   FormRoot,
+  validateHttp,
   validateStandardSchema,
 } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
@@ -149,7 +150,7 @@ export class AddAuctionPageSignalComponent {
     description: '',
   });
 
-  auctionForm = form(this.auctionModel, (schema) => {
+  auctionForm = form(this.auctionModel, (shape) => {
     /*
     const genericReq = { message: 'To pole jest wymagane' };
     required(schema.title, genericReq);
@@ -160,7 +161,26 @@ export class AddAuctionPageSignalComponent {
     max(schema.imgId, 1080, { message: 'Max 1080!' });
     */
 
-    validateStandardSchema(schema, AuctionModelSchema);
+    // validateStandardSchema(schema, AuctionModelSchema);
+
+    validateStandardSchema(shape.title, AuctionModelSchema.shape.title);
+    validateStandardSchema(shape.imgId, AuctionModelSchema.shape.imgId);
+    validateStandardSchema(shape.price, AuctionModelSchema.shape.price);
+    validateStandardSchema(shape.description, AuctionModelSchema.shape.description);
+
+    validateHttp(shape.title, {
+      request: (ctx) => {
+        const title = ctx.value().trim();
+        return title ? `/api/auctions/check-title?title=${encodeURIComponent(title)}` : undefined;
+      },
+      onSuccess: (res: { isRestricted: boolean }) => {
+        return res.isRestricted
+          ? { kind: 'restrictedTitle', message: 'Tytuł jest niedostępny' }
+          : null;
+      },
+      onError: () => null,
+      // debounce: 400,
+    });
   });
 
   auctionsService = inject(AuctionsService);
@@ -187,7 +207,7 @@ export class AddAuctionPageSignalComponent {
       description,
       imgUrl: this.imgPreviewUrl(),
     };
-    
+
     this.auctionsService.addNew(auction).subscribe({
       next: (a: AuctionItem) => {
         this.auctionModel.set({

@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/auctions
 
 ### Get ONE auction
-GET http://localhost:3000/api/auctions/p1uCsfRI
+GET http://localhost:3000/api/auctions
 
 ### Add new auction
 POST http://localhost:3000/api/auctions
@@ -12,3 +12,9 @@ Content-Type: application/json
     "title": "sample!",
     "imgUrl": "https://img.com/s.png"
 }
+
+### Check title happy path
+GET http://localhost:3000/api/auctions/check-title?title=inny
+
+### Check title - sad path
+GET http://localhost:3000/api/auctions/check-title?title=ALLegro
