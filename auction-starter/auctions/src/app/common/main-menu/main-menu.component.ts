@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
-import { CartService } from '../../cart/cart.service';
-import { CartStore } from '../../cart/cart.store';
+import { CartNgrxStore } from '../../cart/cart.ngrx-store';
+// import { CartService } from '../../cart/cart.service';
+// import { CartStore } from '../../cart/cart.store';
 
 interface MenuItem {
   link: string;
@@ -48,7 +49,7 @@ interface MenuItem {
 })
 export class MainMenuComponent {
 
- protected readonly cartStore = inject(CartStore);
+ protected readonly cartStore = inject(CartNgrxStore);
  
 
   menuItems: MenuItem[] = [

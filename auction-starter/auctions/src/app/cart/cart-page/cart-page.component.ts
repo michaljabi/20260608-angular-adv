@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CartRowComponent } from './cart-row.component';
 import { CartStore } from '../cart.store';
+import { CartNgrxStore } from '../cart.ngrx-store';
 
 @Component({
   imports: [CartRowComponent],
@@ -50,5 +51,5 @@ import { CartStore } from '../cart.store';
   styles: ``,
 })
 export class CartPageComponent {
-  protected readonly cartStore = inject(CartStore);
+  protected readonly cartStore = inject(CartNgrxStore);
 }

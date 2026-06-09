@@ -3,7 +3,8 @@ import { AuctionsService } from '../auctions.service';
 import { AuctionItem } from '../auction-item';
 import { AuctionCardComponent } from '../auction-card/auction-card.component';
 import { SharedModule } from '../../shared/shared.module';
-import { CartStore } from '../../cart/cart.store';
+//import { CartStore } from '../../cart/cart.store';
+import { CartNgrxStore } from '../../cart/cart.ngrx-store';
 
 @Component({
   imports: [AuctionCardComponent, SharedModule],
@@ -49,7 +50,7 @@ export class AuctionsPageComponent implements OnInit {
   protected searchText = signal('');
 
   private auctionService = inject(AuctionsService);
-  private readonly cartStore = inject(CartStore);
+  private readonly cartStore = inject(CartNgrxStore);
 
   ngOnInit(): void {
     this.loadAuctions();
