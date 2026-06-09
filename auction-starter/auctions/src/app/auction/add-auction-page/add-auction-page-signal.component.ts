@@ -3,9 +3,17 @@ import { SharedModule } from '../../shared/shared.module';
 // import { FormsModule } from '@angular/forms';
 import { AuctionsService } from '../auctions.service';
 import { AuctionItem } from '../auction-item';
-import { form, FormField, max, min, required, FormRoot } from '@angular/forms/signals';
+import {
+  form,
+  FormField,
+  // max,
+  // min,
+  // required,
+  FormRoot,
+  validateStandardSchema,
+} from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
-
+import { AuctionModelSchema } from './auction-model.schema';
 
 // Albo tak tzw. Index Type z TS
 // https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html#handbook-content
@@ -140,6 +148,7 @@ export class AddAuctionPageSignalComponent {
   });
 
   auctionForm = form(this.auctionModel, (schema) => {
+    /*
     const genericReq = { message: 'To pole jest wymagane' };
     required(schema.title, genericReq);
     required(schema.price, { message: 'Musisz podać cenę aukcji' });
@@ -147,6 +156,9 @@ export class AddAuctionPageSignalComponent {
     required(schema.imgId, genericReq);
     min(schema.imgId, 1, { message: 'Min. 1!' });
     max(schema.imgId, 1080, { message: 'Max 1080!' });
+    */
+
+    validateStandardSchema(schema, AuctionModelSchema);
   });
 
   auctionsService = inject(AuctionsService);
