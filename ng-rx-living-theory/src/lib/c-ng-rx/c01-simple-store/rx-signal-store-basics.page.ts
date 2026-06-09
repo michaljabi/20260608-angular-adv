@@ -25,13 +25,22 @@ import { HardwareStore } from './hardware.store';
         }
 
         <div class="panel-block has-text-grey is-size-7">
-          {{ store.availableTools().length }} narzędzia
+          {{ store.noOfItems() }} narzędzia
+        </div>
+          <div class="panel-block has-text-grey is-size-7">
+          {{ store.noOfItems() }} narzędzia
         </div>
       </nav>
     </app-page>
   `,
-  providers: [HardwareStore],
+  providers: [],
 })
 export class RxSignalStoreBasicsPage {
   readonly store = inject(HardwareStore);
+
+  constructor() {
+    this.store.addTool('SAMPLE')
+    // this.store.addTool('SAMPLE')
+    // this.store.addTool('SAMPLE')
+  }
 }
