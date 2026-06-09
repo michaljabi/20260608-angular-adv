@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { interval, map } from 'rxjs';
+import { interval, map, share } from 'rxjs';
 import { PageComponent } from '../../common/page/page.component';
 
 @Component({
@@ -53,7 +53,10 @@ export class OneSourceManySubscribersBehaviorPage {
   counterTwo = signal(0);
 
   // 📃 Doc: https://rxjs.dev/guide/glossary-and-semantics
-  secondsSource$ = interval(1000).pipe(map((i) => i + 1));
+  secondsSource$ = interval(1000).pipe(
+    map((i) => i + 1),
+    share(),
+  );
 
   startReceiveValuesForFirstCounter() {
     this.secondsSource$.subscribe((value) => this.counterOne.set(value));

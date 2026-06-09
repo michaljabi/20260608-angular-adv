@@ -10,9 +10,10 @@ numbers$.subscribe((n) => {
 });
 
 // Consumer 2:
-numbers$.subscribe((n) => {
+const sub2 = numbers$.subscribe((n) => {
   console.log('odbiorca #2:', n);
 });
+sub2.unsubscribe();
 
 
 // Pełne API (te same emisje i sposób działania?)
