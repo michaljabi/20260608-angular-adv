@@ -6,6 +6,24 @@ import { AuctionItem } from '../auction-item';
 import { form, FormField, max, min, required, FormRoot } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
 
+
+// Albo tak tzw. Index Type z TS
+// https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html#handbook-content
+interface AuctionFormModel {
+  title: AuctionItem['title'];
+  price: AuctionItem['price'];
+  imgId: number;
+  description: string;
+}
+
+// Albo tak tzw Util Type (Pick<>) użyty
+// https://www.typescriptlang.org/docs/handbook/utility-types.html#handbook-content
+// https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys
+type AuctionFormModelVariant = Pick<AuctionItem, 'title' | 'price'> & {
+  imgId: number;
+  description: string;
+};
+
 @Component({
   selector: 'app-add-auction-page-signal',
   imports: [SharedModule /*FormsModule,*/, FormRoot, FormField, JsonPipe],
@@ -114,7 +132,7 @@ import { JsonPipe } from '@angular/common';
   ],
 })
 export class AddAuctionPageSignalComponent {
-  auctionModel = signal<{ title: string; price: number; imgId: number; description: string }>({
+  auctionModel = signal<AuctionFormModel>({
     title: '',
     price: 0,
     imgId: 1,
