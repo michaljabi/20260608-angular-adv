@@ -17,6 +17,17 @@ import { debounceTime, distinctUntilChanged, map, Subject, tap } from 'rxjs';
 export class ListSearchControlComponent implements OnInit {
   caseSensitive = input(false);
   search = output<string>()
+
+
+  // Podstawowa różnica: Subject vs Observable ?
+  // Subject = HOT ! ----(a)-----(b)------(c)------->
+  //     sub1                        *----(c)------
+  //     sub2                  *-(b)------(c)--------
+
+  // Observable = COLD ! -(1)-(2)-(3)-|>
+  //     sub1                            *-(1)-(2)-(3)-|>
+  //     sub2                *-(1)-(2)-(3)-|>
+  //     sub3                       *-(1)-(2)-(3)-|>
   searchInput$ = new Subject<string>();
 
   handleInput(event: Event) {
