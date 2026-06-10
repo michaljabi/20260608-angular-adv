@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>auction-add-wizard — Elements demo</title>
+    <!-- Host musi dostarczyć Bootstrap (w component jest ustawiony encapsulation:Emulated, używa klas css z Bootstrap) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body class="container py-4">
+    <h1 class="h4 mb-3">&lt;auction-add-wizard&gt; — standalone custom element</h1>
+    <p class="text-muted">
+      Reused from <code>@auction-workspace/auctions/ui</code> with zero changes,
+      compiled to a framework-agnostic web component. Complete the wizard — the
+      emitted <code>completed</code> CustomEvent payload shows below.
+    </p>
+
+    <auction-add-wizard></auction-add-wizard>
+
+    <hr class="my-4" />
+    <h2 class="h6">Last <code>completed</code> event payload</h2>
+    <pre id="out" class="bg-light border rounded p-3">— (none yet) —</pre>
+
+    <hr class="my-4" />
+    <h2 class="h6 mb-3">Second element — <code>&lt;auction-card&gt;</code></h2>
+    <p class="text-muted">
+      Object input <code>item</code> is set as a DOM <strong>property</strong>;
+      its <code>addToCart</code> output → CustomEvent (logged below).
+    </p>
+    <div style="max-width: 20rem">
+      <auction-card id="card"></auction-card>
+    </div>
+    <h2 class="h6 mt-3">Last <code>addToCart</code> event payload</h2>
+    <pre id="cardOut" class="bg-light border rounded p-3">— (none yet) —</pre>
+
+    <!-- The built single bundle registers BOTH custom elements (shared Angular runtime) -->
+    <script type="module" src="./main.js"></script>
+    <script>
+      const show = (id, detail) =>
+        (document.getElementById(id).textContent = JSON.stringify(
+          detail,
+          null,
+          2,
+        ));
+
+      document
+        .querySelector('auction-add-wizard')
+        .addEventListener('completed', (e) => show('out', e.detail));
+
+      // Object inputs must be set as DOM properties AFTER the element upgrades,
+      // otherwise the pre-upgrade value is shadowed by Angular's property accessor.
+      customElements.whenDefined('auction-card').then(() => {
+        const card = document.getElementById('card');
+        card.item = {
+          uid: 'demo-1',
+          title: 'Zegarek vintage',
+          imgUrl: 'https://picsum.photos/id/1/600/400',
+          price: 249,
+          description: 'Przykładowa aukcja renderowana przez web-component.',
+          isPromoted: true,
+        };
+        card.addEventListener('addToCart', (e) => show('cardOut', e.detail));
+      });
+    </script>
+  </body>
+</html>

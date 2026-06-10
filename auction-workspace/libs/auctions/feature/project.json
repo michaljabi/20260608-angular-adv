@@ -1,0 +1,13 @@
+{
+  "name": "auctions-feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auctions/feature/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:feature", "platform:web", "scope:auctions"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "@auction-workspace/shared/domain": ["./libs/shared/domain/src/index.ts"],
+      "@auction-workspace/shared/ui": ["./libs/shared/ui/src/index.ts"],
+      "@auction-workspace/shared/util-icons": [
+        "./libs/shared/util-icons/src/index.ts"
+      ],
+      "@auction-workspace/auctions/data-access": [
+        "./libs/auctions/data-access/src/index.ts"
+      ],
+      "@auction-workspace/auctions/ui": ["./libs/auctions/ui/src/index.ts"],
+      "@auction-workspace/auctions/feature": [
+        "./libs/auctions/feature/src/index.ts"
+      ],
+      "@auction-workspace/cart/data-access": [
+        "./libs/cart/data-access/src/index.ts"
+      ],
+      "@auction-workspace/cart/feature": ["./libs/cart/feature/src/index.ts"],
+      "@auction-workspace/cart/api": ["./libs/cart/api/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

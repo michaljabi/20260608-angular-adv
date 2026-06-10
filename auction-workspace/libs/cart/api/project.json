@@ -1,0 +1,13 @@
+{
+  "name": "cart-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/cart/api/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:api", "platform:web", "scope:cart"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

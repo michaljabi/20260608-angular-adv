@@ -1,0 +1,13 @@
+{
+  "name": "auctions-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auctions/ui/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:ui", "platform:web", "scope:auctions"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

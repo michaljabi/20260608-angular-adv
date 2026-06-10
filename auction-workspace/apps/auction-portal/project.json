@@ -1,0 +1,85 @@
+{
+  "name": "auction-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/auction-portal/src",
+  "tags": ["type:app", "platform:web", "scope:portal"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/auction-portal",
+        "browser": "apps/auction-portal/src/main.ts",
+        "tsConfig": "apps/auction-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/auction-portal/public"
+          }
+        ],
+        "styles": ["apps/auction-portal/src/styles.css"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "auction-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "auction-portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn": ["auction-api:serve"],
+      "options": {
+        "open": true,
+        "proxyConfig": "apps/auction-portal/proxy.conf.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "auction-portal:build",
+        "staticFilePath": "dist/apps/auction-portal/browser",
+        "spa": true
+      }
+    }
+  }
+}
