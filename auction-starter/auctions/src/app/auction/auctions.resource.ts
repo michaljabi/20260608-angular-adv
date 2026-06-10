@@ -1,19 +1,17 @@
-import { inject, Service } from '@angular/core';
+import { computed, inject, Service } from '@angular/core';
 import { AuctionItem } from './auction-item';
 import { HttpClient, httpResource } from '@angular/common/http';
 
 @Service()
 export class AuctionsResource {
-  readonly #auctionEnpoint = 'api/auctions';
+  readonly #auctionEnpoint = 'api/auctionst6';
   readonly #auctionResource = httpResource<AuctionItem[]>(() => this.#auctionEnpoint, {
     defaultValue: [],
   });
 
   httpClient = inject(HttpClient);
 
-  get all() {
-    return this.#auctionResource.value;
-  }
+  all = computed(() => (this.#auctionResource.hasValue() ? this.#auctionResource.value() : []));
 
   get isLoading() {
     return this.#auctionResource.isLoading;

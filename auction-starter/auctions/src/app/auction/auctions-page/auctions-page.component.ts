@@ -32,9 +32,8 @@ import { JsonPipe } from '@angular/common';
           </div>
         }
 
-        <!-- @let error = auctionsResource.error(); -->
-        <pre><code>{{ auctionsResource.error() | json }}</code></pre>
-        <!-- @if (error) {
+        @let error = auctionsResource.error();
+        @if (error) {
           <div class="col-12">
             <div class="alert alert-danger">
               Nie udało się załadować aukcji 😭 !
@@ -42,7 +41,7 @@ import { JsonPipe } from '@angular/common';
               <div>{{ error.message }}</div>
             </div>
           </div>
-        } -->
+        }
       }
     </div>
   `,
