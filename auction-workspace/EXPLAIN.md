@@ -126,3 +126,18 @@ npx nx g @nx/angular:library --name=user-feature     --directory=libs/user/featu
 # publiczne API dla innych domen:
 npx nx g @nx/angular:library --name=user-api     --directory=libs/user/api     --tags="type:api,platform:web,scope:user"     --standalone --importPath=@auction-workspace/user/api
 ```
+
+## Generowanie komponentu,serwisu - elementów angularowych:
+```bash
+npx nx npx nx g @nx/angular:c nazwa   # component
+npx nx npx nx g @nx/angular:s nazwa   # service
+npx nx npx nx g @nx/angular:i nazwa   # interface... etc... (podobnie jak w angular schematics)
+```
+
+## Używaj `--dry-run` - `nx` również działa 💡
+
+Np.
+
+```bash
+npx nx g @nx/angular:library --name=user-api     --directory=libs/user/api     --tags="type:api,platform:web,scope:user"     --standalone --importPath=@auction-workspace/user/api --dry-run
+```
