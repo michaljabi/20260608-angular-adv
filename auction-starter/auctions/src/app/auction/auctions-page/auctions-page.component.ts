@@ -66,17 +66,34 @@ export class AuctionsPageComponent implements OnInit {
     this.isLoading.set(true);
     this.auctions.set([]);
     this.errorMessage.set('');
+
+    // CONSUMER:
+    // #1 --- wiemy, że COLD
+    // #2 --- wiemy, że SKOŃCZONY
+    // czy strumień jest skończony czy nieskończony?
+
+    // Zasady RxJS: kontrakt
+    // 1. jeśli strumień emituje to `next`
+    // 2. jeśli skończył to `complete`
+    // 3. jeśli ma error to `error`
+    // NIE MOGĄ ISTNIEĆ 2 STANY w tym samym momencie
+    // stany `complete` / `error` - powodują, 
+    // że nie wracamy do `next` ani żadnego innego przeciwnego stanu
     this.auctionService.getAll().subscribe({
       next: (auctions) => {
         this.auctions.set(auctions);
         console.log(auctions);
-        this.isLoading.set(false);
+        // this.isLoading.set(false);
       },
       error: (err) => {
         this.errorMessage.set(err.message || 'Nieznany błąd');
+        // this.isLoading.set(false);
+      },
+      complete: () => {
+        // ⚔️ Sidequest:
+        // 🪲 spot the bug, czemu nie TYLKO tak:
         this.isLoading.set(false);
       },
-      complete: () => console.log('aukcje załadowane...'),
     });
   }
 
