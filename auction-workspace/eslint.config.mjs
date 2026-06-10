@@ -93,6 +93,14 @@ export default [
               ],
             },
             {
+              sourceTag: 'scope:user',
+              onlyDependOnLibsWithTags: [
+                'scope:user',
+                'scope:shared',
+                'type:api',
+              ],
+            },
+            {
               sourceTag: 'scope:shared',
               onlyDependOnLibsWithTags: ['scope:shared'],
             },
