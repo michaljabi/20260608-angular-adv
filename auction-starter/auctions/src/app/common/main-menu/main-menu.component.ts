@@ -15,8 +15,8 @@ interface MenuItem {
   imports: [
     RouterLink,
     RouterLinkActive,
-    SharedModule
-  ],
+    SharedModule,
+],
   template: `
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 mb-3">
       <button class="navbar-toggler" type="button" (click)="handleMenuToggle()">

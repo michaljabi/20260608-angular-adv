@@ -6,10 +6,10 @@ import { SharedModule } from '../../shared/shared.module';
 //import { CartStore } from '../../cart/cart.store';
 import { CartNgrxStore } from '../../cart/cart.ngrx-store';
 import { AuctionsResource } from '../auctions.resource';
-import { JsonPipe } from '@angular/common';
+// import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [AuctionCardComponent, SharedModule, JsonPipe],
+  imports: [AuctionCardComponent, SharedModule],
   template: `
     <h2 class="my-3">Lista naszych aukcji</h2>
     <div class="row">
