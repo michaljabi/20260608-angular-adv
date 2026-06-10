@@ -8,6 +8,9 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { AuctionItem } from '@auction-workspace/shared/domain';
 import { appIcons } from '@auction-workspace/shared/util-icons';
 
+
+import { AuctionsResourceService } from '@auction-workspace/auctions/data-access';
+
 /**
  * Komponent prezentacyjny (dumb): tylko `input()`/`output()`, brak DI serwisów,
  * brak HttpClient — łatwy do testów i wielokrotnego użycia (także w koszyku).

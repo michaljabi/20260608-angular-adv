@@ -30,7 +30,11 @@
         "./libs/cart/data-access/src/index.ts"
       ],
       "@auction-workspace/cart/feature": ["./libs/cart/feature/src/index.ts"],
-      "@auction-workspace/cart/api": ["./libs/cart/api/src/index.ts"]
+      "@auction-workspace/cart/api": ["./libs/cart/api/src/index.ts"],
+      "@auction-workspace/user": ["./user/src/index.ts"],
+      "@auction-workspace/user/data-access": [
+        "./libs/user/data-access/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

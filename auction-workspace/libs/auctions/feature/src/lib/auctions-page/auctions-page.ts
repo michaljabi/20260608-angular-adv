@@ -5,6 +5,9 @@ import { AuctionCard } from '@auction-workspace/auctions/ui';
 import { AuctionItem } from '@auction-workspace/shared/domain';
 import { CartApi } from '@auction-workspace/cart/api';
 
+
+//import { CartStore } from '@auction-workspace/cart/data-access'
+
 @Component({
   selector: 'lib-auctions-page',
   imports: [AuctionCard, RouterLink],
@@ -43,6 +46,7 @@ export class AuctionsPage {
   searchText = signal('');
   private readonly resource = inject(AuctionsResourceService);
   private readonly cartApi = inject(CartApi);
+  // private readonly cartStore = inject(CartStore)
   protected readonly auctions = this.resource.getAll();
 
   protected onAddToCart(item: AuctionItem): void {

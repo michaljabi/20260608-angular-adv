@@ -109,3 +109,20 @@ npx nx g @nx/angular:app demo
 ```
 
 Pamiętaj o nadaniu poprawnych **trzech tagów** — bez nich granice nie zadziałają.
+
+
+## Dodawanie warstw domen (USER)
+
+```bash
+# serwisy, foront-endowe dane, story, logika
+npx nx g @nx/angular:library --name=user-data-access --directory=libs/user/data-access --tags="type:data-access,platform:web,scope:user" --standalone --importPath=@auction-workspace/user/data-access
+
+# dumb componenty ui, etc.
+npx nx g @nx/angular:library --name=user-ui          --directory=libs/user/ui          --tags="type:ui,platform:web,scope:user"          --standalone --importPath=@auction-workspace/user/ui
+
+# smart componenty strony, dostęp do data-access etc.
+npx nx g @nx/angular:library --name=user-feature     --directory=libs/user/feature     --tags="type:feature,platform:web,scope:user"     --standalone --importPath=@auction-workspace/user/feature
+
+# publiczne API dla innych domen:
+npx nx g @nx/angular:library --name=user-api     --directory=libs/user/api     --tags="type:api,platform:web,scope:user"     --standalone --importPath=@auction-workspace/user/api
+```
