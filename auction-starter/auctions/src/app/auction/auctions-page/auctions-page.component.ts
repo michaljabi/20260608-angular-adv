@@ -83,17 +83,19 @@ export class AuctionsPageComponent implements OnInit {
       next: (auctions) => {
         this.auctions.set(auctions);
         console.log(auctions);
-        // this.isLoading.set(false);
+        this.isLoading.set(false);
       },
       error: (err) => {
         this.errorMessage.set(err.message || 'Nieznany błąd');
-        // this.isLoading.set(false);
+        this.isLoading.set(false);
       },
+      /*
       complete: () => {
         // ⚔️ Sidequest:
         // 🪲 spot the bug, czemu nie TYLKO tak:
         this.isLoading.set(false);
       },
+      */
     });
   }
 
