@@ -4,6 +4,7 @@ import { partBRoutes } from '../lib/b-rxjs/part-b.routes';
 import { partCRoutes } from '../lib/c-ng-rx/part-c.routes';
 import { partDRoutes } from '../lib/d-signal-forms/part-d.routes';
 import { HelloPage } from '../lib/common/hello-page/hello.page';
+import { partERoutes } from '../lib/e-generative-ai/part-e.routes';
 
 export const routes: Routes = [
   { path: '', component: HelloPage, pathMatch: 'full' },
@@ -11,4 +12,5 @@ export const routes: Routes = [
   ...partBRoutes,
   ...partCRoutes,
   ...partDRoutes,
+  ...partERoutes,
 ];

@@ -78,6 +78,17 @@ export class MainMenuComponent {
         { label: 'Formularz dynamiczny (Zod)', link: '/d-add-post' },
         { label: 'Złożony formularz (konto + adres)', link: '/d-create-account' },
       ],
-    }
+    },
+    {
+      label: 'Część E - Agenci AI',
+      children: [
+        { label: 'Okno kontekstu i reguły', link: '/e-context-window' },
+        { label: 'The Plan Mode', link: '/e-plan-mode' },
+        { label: 'Najfajniejszy Skill', link: '/e-grill-me-skill' },
+        { label: 'Servery MCP dla Frontu', link: '/e-mcp-servers' },
+        { label: 'Spec driven Za i Przeciw', link: '/e-spec-driven-pros-and-cons' },
+        { label: 'Integracja z projektem', link: '/e-integration' },
+      ],
+    },
   ];
 }
